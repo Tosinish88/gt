@@ -18,13 +18,14 @@ func ServerHandler(w http.ResponseWriter, r *http.Request) {
 	var data []binddata.FullData
 
 	// var i int
+	fmt.Println(r.URL.Path)
 	switch r.URL.Path {
 	case "/":
 		data = getdata.GetData()
 		for i, _ := range data {
 			t.Execute(w, data[i])
 		}
-	case "/artists/Id":
+	case "/artists/1":
 		id, err := strconv.Atoi(r.URL.Path[9:])
 		fmt.Println(id)
 		if err != nil {
