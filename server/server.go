@@ -24,15 +24,14 @@ func ServerHandler(w http.ResponseWriter, r *http.Request) {
 		for i, _ := range data {
 			t.Execute(w, data[i])
 		}
-	case "/artists/id":
+	case "/artists/Id":
 		id, err := strconv.Atoi(r.URL.Path[9:])
 		fmt.Println(id)
 		if err != nil {
 			log.Fatalln(err)
 		}
 		data1 := getdata.GetArtistById(id)
-		t.Execute(w, data1)
-		fmt.Println("i got here too")
+		fmt.Fprintln(w, data1)
 
 	}
 }
