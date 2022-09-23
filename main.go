@@ -16,4 +16,5 @@ func main() {
 	if err != nil {
 		log.Fatalln("There's an error with the server:", err)
 	}
+	// fmt.Println(getdata.GetData()[0].Members[0])
 }

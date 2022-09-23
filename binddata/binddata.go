@@ -1,6 +1,6 @@
 package binddata
 
-type ArtistData struct {
+type FullData struct {
 	Id             int                 `json:"id"`
 	Name           string              `json:"name"`
 	Image          string              `json:"image"`
@@ -11,6 +11,7 @@ type ArtistData struct {
 	ConcertDates   []string            `json:"concerts"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
+
 
 type Artist struct {
 	Id           int      `json:"id"`
@@ -50,3 +51,4 @@ type Dates struct {
 type Relations struct {
 	Index []Relation `json:"index"`
 }
+

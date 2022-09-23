@@ -1,11 +1,13 @@
 package server
 
 import (
+	"fmt"
+	"gp/binddata"
 	"gp/getdata"
 	"log"
 	"net/http"
+	"strconv"
 	"text/template"
-	"gp/binddata"
 )
 
 func ServerHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,15 +15,48 @@ func ServerHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	var data []binddata.ArtistData
+	var data []binddata.FullData
+
+	// var i int
 	switch r.URL.Path {
 	case "/":
 		data = getdata.GetData()
-	// case "/artists/" + "id":
-	// 	id := 
-		
-	}
-	
+		for i, _ := range data {
+			t.Execute(w, data[i])
+		}
+	case "/artists/id":
+		id, err := strconv.Atoi(r.URL.Path[9:])
+		fmt.Println(id)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		data1 := getdata.GetArtistById(id)
+		t.Execute(w, data1)
+		fmt.Println("i got here too")
 
-	t.Execute(w, data)
+	}
 }
+
+// func ServerHandler(w http.ResponseWriter, r *http.Request) {
+// 	t, err := template.ParseFiles("templates/index_start.html")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// 	t.Execute(w, nil)
+
+// 	var data []binddata.FullData
+// 	data = getdata.GetData()
+// 	for i, _ := range data {
+// 		artT, err := template.ParseFiles("templates/artistThumb.html")
+// 		if err != nil {
+// 			log.Fatalln(err)
+// 		}
+// 		artT.Execute(w, data[i])
+// 	}
+
+// 	t, err = template.ParseFiles("templates/index_end.html")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// 	t.Execute(w, nil)
+// }
