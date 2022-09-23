@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"text/template"
+	"gp/binddata"
 )
 
 func ServerHandler(w http.ResponseWriter, r *http.Request) {
@@ -12,6 +13,15 @@ func ServerHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	data := getdata.GetArtistById(4)
+	var data []binddata.ArtistData
+	switch r.URL.Path {
+	case "/":
+		data = getdata.GetData()
+	// case "/artists/" + "id":
+	// 	id := 
+		
+	}
+	
+
 	t.Execute(w, data)
 }

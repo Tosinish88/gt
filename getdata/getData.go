@@ -101,11 +101,11 @@ func GetData() []binddata.ArtistData {
 
 func GetArtistById(id int) binddata.ArtistData {
 	data := GetData()
-	fmt.Println(len(data))
+	// fmt.Println(len(data))
 	if id <= 0 || id > len(data) {
 		fmt.Println("Invalid id")
 		return binddata.ArtistData{}
 	}
-	fmt.Println(GetData()[id-1])
+	// fmt.Println(GetData()[id-1])
 	return data[id-1]
 }
