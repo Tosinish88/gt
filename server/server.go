@@ -2,38 +2,50 @@ package server
 
 import (
 	"fmt"
-	"gp/binddata"
 	"gp/getdata"
 	"log"
 	"net/http"
-	"strconv"
 	"text/template"
 )
 
+var ArtistsData []getdata.FullData
+
+const baseUrl = "https://groupietrackers.herokuapp.com/api"
+
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
+}
+
 func ServerHandler(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("templates/index.html")
+	ArtistsData = getdata.Binddata(baseUrl + "/artists")
+	if ArtistsData == nil {
+		fmt.Println("Error getting data")
+		return
+	}
+	_, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		log.Fatalln(err)
+		fmt.Fprint(w, "500 - Interal Server Error")
+		return
 	}
-	var data []binddata.FullData
+	if r.URL.Path != "/" {
+		fmt.Fprint(w, "400 - Page not found")
+		return
+	}
+	data := []getdata.FullData{}
+	
+	fmt.Println(data)
+	fmt.Println("i got here")
+	for _, artist := range ArtistsData {
+		if contains(getdata.FullData.Locations, artist.Name) {
 
-	// var i int
-	fmt.Println(r.URL.Path)
-	switch r.URL.Path {
-	case "/":
-		data = getdata.GetData()
-		for i, _ := range data {
-			t.Execute(w, data[i])
 		}
-	case "/artists/1":
-		id, err := strconv.Atoi(r.URL.Path[9:])
-		fmt.Println(id)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		data1 := getdata.GetArtistById(id)
-		fmt.Fprintln(w, data1)
-
 	}
 }
 

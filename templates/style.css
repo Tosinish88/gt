@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+
+.allColumns {
+    float:left;
+    width: auto;
+    padding: 10px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media screen and (max-width: 600px) {
+    .allColumns {
+        width: auto;
+    }
+}

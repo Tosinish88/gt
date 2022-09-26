@@ -2,116 +2,138 @@ package getdata
 
 import (
 	"encoding/json"
-	"fmt"
-	"gp/binddata"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-const baseUrl = "https://groupietrackers.herokuapp.com/api"
+type FullData struct {
+	Id             int                 `json:"id"`
+	Name           string              `json:"name"`
+	Image          string              `json:"image"`
+	Members        []string            `json:"members"`
+	CreationDate   string              `json:"creationDate"`
+	FirstAlbum     string              `json:"firstAlbum"`
+	Locations      []string            `json:"locations"`
+	Relation	string            `json:"concerts"`
+	DatesLocations map[string][]string `json:"datesLocations"`
+}
 
-// contains all dat
+type Relation struct {
+	Id             int                 `json:"id"`
+	DatesLocations map[string][]string `json:"datesLocations"`
+}
 
-// contains the
-var Artists []binddata.Artist
-var ArtistLocation binddata.Locations
-var ArtistDates binddata.Dates
-var ArtistRelations binddata.Relations
-
-func GetArtistData() {
-	r, err := http.Get(baseUrl + "/artists")
+func GetData(link string) []byte {
+	r, err := http.Get(link)
 	if err != nil {
 		log.Fatalln(err)
+		return nil
 	}
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Fatalln(err)
+		return nil
 	}
-	json.Unmarshal(body, &Artists)
-	// fmt.Println(Artists)
+	return body
 }
 
-func GetArtistLocation() {
-	r, err := http.Get(baseUrl + "/locations")
+func Binddata(link string) []FullData {
+	data := GetData(link)
+	artists := []FullData{}
+
+	err := json.Unmarshal(data, &artists)
 	if err != nil {
 		log.Fatalln(err)
+		return nil
 	}
-
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalln(err)
+	for i := 0; i < len(artists); i++ {
+		r := Relation{}
+		json.Unmarshal(GetData(artists[i].Relation), &r)
+		artists[i].DatesLocations = r.DatesLocations
 	}
-
-	json.Unmarshal(body, &ArtistLocation)
-	// fmt.Println(ArtistLocation)
+	return artists
 }
 
-func GetArtistDates() {
-	r, err := http.Get(baseUrl + "/dates")
-	if err != nil {
-		log.Fatalln(err)
-	}
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
+// func GetArtistLocation() {
+// 	r, err := http.Get(baseUrl + "/locations")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-	json.Unmarshal(body, &ArtistDates)
-	// fmt.Println(ArtistDates)
-}
+// 	body, err := ioutil.ReadAll(r.Body)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-func GetArtistRelations() {
-	r, err := http.Get(baseUrl + "/relation")
-	if err != nil {
-		log.Fatalln(err)
-	}
+// 	json.Unmarshal(body, &ArtistLocation)
+// 	// fmt.Println(ArtistLocation)
+// }
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
+// func GetArtistDates() {
+// 	r, err := http.Get(baseUrl + "/dates")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-	json.Unmarshal(body, &ArtistRelations)
-	// fmt.Println(ArtistRelations)
-}
+// 	body, err := ioutil.ReadAll(r.Body)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-var ArtistsFullData []binddata.FullData
+// 	json.Unmarshal(body, &ArtistDates)
+// 	// fmt.Println(ArtistDates)
+// }
 
-func GetData() []binddata.FullData {
-	if ArtistsFullData != nil {
-		return ArtistsFullData
-	}
-	GetArtistData()
-	GetArtistLocation()
-	GetArtistDates()
-	GetArtistRelations()
+// func GetArtistRelations() {
+// 	r, err := http.Get(baseUrl + "/relation")
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-	for i := range Artists {
-		var temp binddata.FullData
-		temp.Id = i + 1
-		temp.Name = Artists[i].Name
-		temp.Image = Artists[i].Image
-		temp.Members = Artists[i].Members
-		temp.CreationDate = Artists[i].CreationDate
-		temp.FirstAlbum = Artists[i].FirstAlbum
-		temp.Locations = ArtistLocation.Index[i].Locations
-		temp.ConcertDates = ArtistDates.Index[i].Dates
-		temp.DatesLocations = ArtistRelations.Index[i].DatesLocations
-		ArtistsFullData = append(ArtistsFullData, temp)
-	}
-	return ArtistsFullData
-}
+// 	body, err := ioutil.ReadAll(r.Body)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
 
-func GetArtistById(id int) binddata.FullData {
-	data := GetData()
-	// fmt.Println(len(data))s
-	if id <= 0 || id > len(data) {
-		fmt.Println("Invalid id")
-		return binddata.FullData{}
-	}
-	// fmt.Println(GetData()[id-1])
-	return data[id-1]
-}
+// 	json.Unmarshal(body, &ArtistRelations)
+// 	// fmt.Println(ArtistRelations)
+// }
+
+// var ArtistsFullData []binddata.FullData
+
+// func GetData() []binddata.FullData {
+// 	if ArtistsFullData != nil {
+// 		return ArtistsFullData
+// 	}
+// 	GetArtistData()
+// 	GetArtistLocation()
+// 	GetArtistDates()
+// 	GetArtistRelations()
+
+// 	for i := range Artists {
+// 		var temp binddata.FullData
+// 		temp.Id = i + 1
+// 		temp.Name = Artists[i].Name
+// 		temp.Image = Artists[i].Image
+// 		temp.Members = Artists[i].Members
+// 		temp.CreationDate = Artists[i].CreationDate
+// 		temp.FirstAlbum = Artists[i].FirstAlbum
+// 		temp.Locations = ArtistLocation.Index[i].Locations
+// 		temp.ConcertDates = ArtistDates.Index[i].Dates
+// 		temp.DatesLocations = ArtistRelations.Index[i].DatesLocations
+// 		ArtistsFullData = append(ArtistsFullData, temp)
+// 	}
+// 	return ArtistsFullData
+// }
+
+// func GetArtistById(id int) binddata.FullData {
+// 	for _, artist := range GetData() {
+// 		if artist.Id == id {
+// 			return artist
+// 		}
+// 	}
+// 	return binddata.FullData{}
+// }

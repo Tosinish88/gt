@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="templates/style.css"> -->
     <title>Groupie-Tracker</title>
 </head>
 
-
 <body>
-    <div class="column">
-        <h3>{{.Name}}</h3>
-        <a href="/artists/{{.Id}}">
-       <img class="child" src="{{.Image}}"/> </a>
+    <div class="row my-3">
+        <div class="col-4 offset-3 text">
+            <h3>{{.Name}}</h3>
+            <a href="/artists/{{.Id}}">
+                <img src="{{.Image}}" alt={{.Name}} style="width:10%"> 
+            </a>
      </div>
+    </div>
 </body>
 </html>
