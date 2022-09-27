@@ -12,14 +12,13 @@ type FullData struct {
 	Name           string              `json:"name"`
 	Image          string              `json:"image"`
 	Members        []string            `json:"members"`
-	CreationDate   string              `json:"creationDate"`
+	CreationDate   int                 `json:"creationDate"`
 	FirstAlbum     string              `json:"firstAlbum"`
-	Locations      []string            `json:"locations"`
-	Relation	string            `json:"concerts"`
+	Relation       string              `json:"relations"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
-type Relation struct {
+type Relations struct {
 	Id             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
@@ -39,7 +38,7 @@ func GetData(link string) []byte {
 	return body
 }
 
-func Binddata(link string) []FullData {
+func BindData(link string) []FullData {
 	data := GetData(link)
 	artists := []FullData{}
 
@@ -49,13 +48,12 @@ func Binddata(link string) []FullData {
 		return nil
 	}
 	for i := 0; i < len(artists); i++ {
-		r := Relation{}
+		r := Relations{}
 		json.Unmarshal(GetData(artists[i].Relation), &r)
 		artists[i].DatesLocations = r.DatesLocations
 	}
 	return artists
 }
-
 
 // func GetArtistLocation() {
 // 	r, err := http.Get(baseUrl + "/locations")

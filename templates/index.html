@@ -9,13 +9,28 @@
 </head>
 
 <body>
-    <div class="row my-3">
-        <div class="col-4 offset-3 text">
-            <h3>{{.Name}}</h3>
-            <a href="/artists/{{.Id}}">
-                <img src="{{.Image}}" alt={{.Name}} style="width:10%"> 
-            </a>
-     </div>
+    <div class="header">
+        <header>
+            <h1>{{.Name}}</h1>
+        </header>
     </div>
+    <section class="bodySection">
+    <section class="infoSection">
+    <div class="info"></div>
+            <!-- <a href="/artists/{{.Id}}"> -->
+                <img src="{{.Image}}" alt={{.Name}} class="imgBorder">
+                <p> <b>Name: </b>{{.Name}}</p>
+                <p><b>Creation Date: </b>{{.CreationDate}}</p>
+                <p><b>First Album: </b>{{.FirstAlbum}}</p>
+                <p><b>Members:</b></p>
+                <ul>
+                    {{range .Members}}
+                    <li>{{ . }}</li>
+                    {{end}}
+                </ul>
+        </div>
+            </a>
+    </div>
+    </section>
 </body>
 </html>
