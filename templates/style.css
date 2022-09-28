@@ -1,12 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-.allColumns {
-    float:left;
-    width: auto;
-    padding: 10px;
-}
 
 .row::after {
     content: "";
@@ -18,4 +9,15 @@
     .allColumns {
         width: auto;
     }
+}
+.content {
+    background-color: #ffffff;
+    padding: 10px;
+    height: 200px;
+    width: 100%;
+}
+.info {
+    display: inline-block;
+    width: auto;
+    padding: 10px;
 }
