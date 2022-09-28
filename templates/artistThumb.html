@@ -1,5 +1,5 @@
 
-<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" >
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 <div class="artistholder mx-4">
 <div class="header">
       <h2>{{.Name}}</h2>
@@ -8,32 +8,9 @@
     <div class="card" style="width: 18rem;">
         <img src="{{.Image}}" class="card-img-top" alt="{{.Name}}">
         <div class="card-body">
-          <!-- <h5 class="card-title">{{.Name}}</h5> -->
-          <!-- <p class="card-text">Click Image for more Information</p> -->
-          <a href="#" class="btn btn-primary">More Information</a>
+          <a href="/artists/{{.Id}}" class="btn btn-primary">Click for more Information</a>
         </div>
       </div>
     </div> 
 </div>
 </div>
-
-
-
-
-
-
-
-
-  <!-- <div class="info">
-    <!-- <a href="/artists/{{.Id}}"> -->
-        <!-- <img src="{{.Image}}" alt={{.Name}} class="imgBorder">
-        <p> <b>Name: </b>{{.Name}}</p> -->
-        <!-- <p><b>Creation Date: </b>{{.CreationDate}}</p>
-        <p><b>First Album: </b>{{.FirstAlbum}}</p>
-        <p><b>Members:</b></p>
-        <ul>
-            {{range .Members}}
-            <li>{{ . }}</li>
-            {{end}}
-        </ul> -->
-<!-- </div> -->

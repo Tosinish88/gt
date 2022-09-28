@@ -2,6 +2,7 @@ package getdata
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -53,6 +54,17 @@ func BindData(link string) []FullData {
 		artists[i].DatesLocations = r.DatesLocations
 	}
 	return artists
+}
+
+func GetArtistById(link string, id int) FullData {
+	for _, artist := range BindData(link) {
+		if artist.Id == id {
+			fmt.Println(artist)
+			return artist
+		}
+	}
+	fmt.Println("No artist with this id")
+	return FullData{}
 }
 
 // func GetArtistLocation() {
@@ -125,13 +137,4 @@ func BindData(link string) []FullData {
 // 		ArtistsFullData = append(ArtistsFullData, temp)
 // 	}
 // 	return ArtistsFullData
-// }
-
-// func GetArtistById(id int) binddata.FullData {
-// 	for _, artist := range GetData() {
-// 		if artist.Id == id {
-// 			return artist
-// 		}
-// 	}
-// 	return binddata.FullData{}
 // }

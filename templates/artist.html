@@ -1,0 +1,22 @@
+
+
+<div class="popup">
+   <a href="/artists/{{.Id}}">
+        <p> <b>Name: </b>{{.Name}}</p>
+        <p><b>Creation Date: </b>{{.CreationDate}}</p>
+        <p><b>First Album: </b>{{.FirstAlbum}}</p>
+        <p><b>Members:</b></p>
+        <ul>
+            {{range .Members}}
+            <li>{{ . }}</li>
+            {{end}}
+        </ul>
+        <p><b>DatesLocations:</b></p>
+        <ul>
+            {{range $index, $element := .DatesLocations}}{{$index}}: {{$element}}
+            <li>{{range $element}}{{.Value}}</li>
+            {{end}}
+            {{end}}
+        </ul>
+        </a>
+</div>
