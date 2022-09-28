@@ -59,7 +59,6 @@ func BindData(link string) []FullData {
 func GetArtistById(link string, id int) FullData {
 	for _, artist := range BindData(link) {
 		if artist.Id == id {
-			fmt.Println(artist)
 			return artist
 		}
 	}

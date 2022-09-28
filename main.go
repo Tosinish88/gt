@@ -9,6 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", server.ServerHandler)
+	http.HandleFunc("/artists/", server.ArtistHandler)
 	// http.HandleFunc("/artists/", server.ServerHandler)
 	fmt.Println()
 	fmt.Println("Server is running on port 8080")

@@ -1,8 +1,32 @@
 
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title"><b>Name: </b>{{.Name}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="popup">
+
+
+<!-- <div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><p> <b>Name: </b>{{.Name}}</p></h4>
+            </div>
    <a href="/artists/{{.Id}}">
-        <p> <b>Name: </b>{{.Name}}</p>
+        
         <p><b>Creation Date: </b>{{.CreationDate}}</p>
         <p><b>First Album: </b>{{.FirstAlbum}}</p>
         <p><b>Members:</b></p>
@@ -11,12 +35,14 @@
             <li>{{ . }}</li>
             {{end}}
         </ul>
-        <p><b>DatesLocations:</b></p>
+        <p><b>Locations and Dates:</b></p>
         <ul>
-            {{range $index, $element := .DatesLocations}}{{$index}}: {{$element}}
-            <li>{{range $element}}{{.Value}}</li>
+            {{range $city, $date := .DatesLocations}}<li>{{$city}}: {{$date}}</li>
             {{end}}
-            {{end}}
+
         </ul>
         </a>
 </div>
+</div>
+</div>
+</div> -->
