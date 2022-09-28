@@ -1,48 +1,44 @@
+<div class="container white black-text artist-page">
+  <a href="/" class="back-home green-text">&#10229; Back to home</a>
+  <h1 class="text-center">
+    {{.Name}}
+  </h1>
+  <div class="col s12 m6">
+    <img src="{{.Image}}" alt="{{.Name}}" class="artist-logo" />
+  </div>
+  <div class="row">
+    <div class="col s12 m6">
+      <h2>Members</h2>
+      <ul>
+        {{range .Members}}
+        <li>
+          <p class="collection-item">
+            {{.}}
+          </p>
+        </li>
+        {{end}}
+      </ul>
 
-<div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title"><b>Name: </b>{{.Name}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+      <h2>Creation Date</h2>
+      <p>
+        {{.CreationDate}}
+      </p>
+
+      <h2>First Album</h2>
+      <p>{{.FirstAlbum}}</p>
+    </div>
+
+    <h2>Location and Dates</h2>
+    <div class="col s12 white black-text">
+      <ul class="collection with-header">
+     
+        {{range $city, $date := .DatesLocations}}
+        <li class="collection-item">
+          {{$city}}:
+          <span class="secondary-content location">{{$date}}</span>
+        </li>
+        {{end}}
+      </ul>
     </div>
   </div>
-
-
-
-<!-- <div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"><p> <b>Name: </b>{{.Name}}</p></h4>
-            </div>
-   <a href="/artists/{{.Id}}">
-        
-        <p><b>Creation Date: </b>{{.CreationDate}}</p>
-        <p><b>First Album: </b>{{.FirstAlbum}}</p>
-        <p><b>Members:</b></p>
-        <ul>
-            {{range .Members}}
-            <li>{{ . }}</li>
-            {{end}}
-        </ul>
-        <p><b>Locations and Dates:</b></p>
-        <ul>
-            {{range $city, $date := .DatesLocations}}<li>{{$city}}: {{$date}}</li>
-            {{end}}
-
-        </ul>
-        </a>
 </div>
-</div>
-</div>
-</div> -->
